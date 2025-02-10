@@ -3,7 +3,7 @@ const { Schema, model } = mongoose;
 
 const leaderboardSchema = new Schema({
   username: { type: String, required: [true, "Username is required"] },
-  score: { type: String, required: [true, "Score is required"] },
+  score: { type: Number, required: [true, "Score is required"] },
   date: { type: Date, default: Date.now },
 });
 
