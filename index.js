@@ -2,8 +2,9 @@ import express from "express";
 import cors from "cors";
 import "./db/index.js";
 import { PORT } from "./config/config.js";
-import leaderboardRouter from "./routes/leaderboardRouter.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import leaderboardRouter from "./routes/leaderboardRouter.js";
+import userRouter from "./routes/userRouter.js";
 
 const app = express();
 const port = PORT || 3000;
@@ -11,6 +12,7 @@ const port = PORT || 3000;
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use("/leaderboard", leaderboardRouter);
+app.use("/users", userRouter);
 app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 app.use(errorHandler);
 
