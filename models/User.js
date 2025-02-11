@@ -17,6 +17,8 @@ const userSchema = new Schema({
   score: { type: Number, default: 0 },
   wins: { type: Number, default: 0 },
   losses: { type: Number, default: 0 },
+  winLossRatio: { type: Number, default: 0 },
+  gamesPlayed: { type: Number, default: 0 },
   roster: { type: [Number], default: [] }, // Array of Pokémon IDs from the external API
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
