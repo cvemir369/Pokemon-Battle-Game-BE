@@ -114,6 +114,7 @@ export const deleteUser = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("User not found", 404));
   }
   await User.findByIdAndDelete(user._id);
+  res.clearCookie("token");
   res.status(200).json({ message: "User deleted successfully" });
 });
 
@@ -148,10 +149,7 @@ export const setUserStats = asyncHandler(async (req, res, next) => {
 
   // Update leaderboard
   const leaderboard = await Leaderboard.findOne({ user_id: user._id });
-  if (leaderboard) {
-    leaderboard.score = user.score;
-    await leaderboard.save();
-  } else {
+  if (!leaderboard) {
     await Leaderboard.create({ user_id: user._id });
   }
   res.status(200).json(user);
