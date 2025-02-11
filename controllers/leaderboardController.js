@@ -2,16 +2,6 @@ import Leaderboard from "../models/Leaderboard.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import ErrorResponse from "../utils/ErrorResponse.js";
 
-export const addToLeaderboard = asyncHandler(async (req, res, next) => {
-  const { user_id } = req.body;
-  if (!user_id) {
-    return next(new ErrorResponse("User ID is required", 400));
-  }
-
-  const newScore = await Leaderboard.create({ user_id });
-  res.status(201).json({ message: "Score submitted", newScore });
-});
-
 export const getLeaderboard = asyncHandler(async (req, res, next) => {
   try {
     const leaderboard = await Leaderboard.find()
