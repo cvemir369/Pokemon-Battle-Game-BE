@@ -1,6 +1,7 @@
 import ErrorResponse from "../utils/ErrorResponse.js";
 import User from "../models/User.js";
 
+// Middleware to check if user is verified
 const isUserVerified = async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
