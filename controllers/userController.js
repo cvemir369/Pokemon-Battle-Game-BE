@@ -113,7 +113,12 @@ export const deleteUser = asyncHandler(async (req, res, next) => {
   if (!user) {
     return next(new ErrorResponse("User not found", 404));
   }
+  const leaderboard = await Leaderboard.findOne({ user_id: user._id });
+  if (leaderboard) {
+    await Leaderboard.findByIdAndDelete(leaderboard._id);
+  }
   await User.findByIdAndDelete(user._id);
+
   res.clearCookie("token");
   res.status(200).json({ message: "User deleted successfully" });
 });
