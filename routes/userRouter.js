@@ -1,6 +1,7 @@
 import { Router } from "express";
 import isUserVerified from "../middlewares/isUserVerified.js";
 import isUserAuthorized from "../middlewares/isUserAuthorized.js";
+import isUserOwner from "../middlewares/isUserOwner.js";
 import {
   createUser,
   getUsers,
@@ -25,18 +26,20 @@ userRouter.route("/").get(isUserAuthorized, getUsers).post(createUser);
 userRouter
   .route("/:id")
   .get(isUserAuthorized, getUser)
-  .put(isUserAuthorized, updateUser)
-  .delete(isUserAuthorized, deleteUser)
-  .patch(isUserAuthorized, setUserImage);
+  .put(isUserAuthorized, isUserOwner, updateUser)
+  .delete(isUserAuthorized, isUserOwner, deleteUser)
+  .patch(isUserAuthorized, isUserOwner, setUserImage);
 
 // set user stats
-userRouter.route("/:id/stats").patch(isUserAuthorized, setUserStats);
+userRouter
+  .route("/:id/stats")
+  .patch(isUserAuthorized, isUserOwner, setUserStats);
 
 // add, remove pokemon from user's roster
 userRouter
   .route("/:id/roster")
-  .patch(isUserAuthorized, addPokemon)
-  .delete(isUserAuthorized, removePokemon);
+  .patch(isUserAuthorized, isUserOwner, addPokemon)
+  .delete(isUserAuthorized, isUserOwner, removePokemon);
 
 // verify user, login, logout
 userRouter.route("/verify/:verificationToken").post(verifyUser);

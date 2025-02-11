@@ -3,6 +3,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 import ErrorResponse from "../utils/ErrorResponse.js";
 import { JWT_SECRET } from "../config/config.js";
 
+// Middleware to check if user is authorized
 const isUserAuthorized = asyncHandler(async (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
