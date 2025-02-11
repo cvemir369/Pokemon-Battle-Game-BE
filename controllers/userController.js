@@ -86,6 +86,9 @@ export const updateUser = asyncHandler(async (req, res, next) => {
   if (!user) {
     return next(new ErrorResponse("User not found", 404));
   }
+  if (user._id.toString() !== req.user.id) {
+    return next(new ErrorResponse("Not authorized to update this user", 401));
+  }
 
   const { username, email, password } = req.body;
   if (email && (await User.findOne({ email }))) {
