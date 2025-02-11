@@ -7,7 +7,9 @@ import {
 
 const leaderboardRouter = Router();
 
-leaderboardRouter.route("/").get(getLeaderboard).post(addToLeaderboard);
-// leaderboardRouter.route("/").get(isUserAuthorized, getLeaderboard).post(isUserAuthorized, addToLeaderboard);
+leaderboardRouter
+  .route("/")
+  .get(getLeaderboard)
+  .post(isUserAuthorized, addToLeaderboard);
 
 export default leaderboardRouter;
