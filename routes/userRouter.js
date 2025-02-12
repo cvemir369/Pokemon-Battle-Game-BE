@@ -15,6 +15,7 @@ import {
   verifyUser,
   loginUser,
   logoutUser,
+  checkSession,
 } from "../controllers/userController.js";
 
 const userRouter = Router();
@@ -45,5 +46,8 @@ userRouter
 userRouter.route("/verify/:verificationToken").post(verifyUser);
 userRouter.route("/login").post(isUserVerified, loginUser);
 userRouter.route("/logout").post(logoutUser);
+
+// check session
+userRouter.get("/check-session/:id", isUserAuthorized, checkSession);
 
 export default userRouter;

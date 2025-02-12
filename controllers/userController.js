@@ -4,7 +4,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 import ErrorResponse from "../utils/ErrorResponse.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { BASE_URL_FRONTEND, JWT_SECRET } from "../config/config.js";
+import { BASE_URL_FRONTEND, JWT_SECRET, NODE_ENV } from "../config/config.js";
 
 // Get all users
 export const getUsers = asyncHandler(async (req, res, next) => {
@@ -199,12 +199,16 @@ export const loginUser = asyncHandler(async (req, res, next) => {
   if (!isMatch) {
     return next(new ErrorResponse("Invalid credentials", 401));
   }
-  const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "1h" });
-  res.cookie("token", token, { httpOnly: true });
+  const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "24h" });
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: NODE_ENV === "production",
+    sameSite: "lax",
+  });
   res.status(200).json({
     message: "User logged in successfully",
-    token: { token },
-    user: { id: user._id, username: user.username, email: user.email },
+    token: token,
+    user: user,
   });
 });
 
@@ -213,3 +217,12 @@ export const logoutUser = asyncHandler(async (req, res, next) => {
   res.clearCookie("token");
   res.status(200).json({ message: "User logged out successfully" });
 });
+
+// Check Session
+export const checkSession = (req, res) => {
+  if (req.user) {
+    res.json({ authenticated: true, user: req.user });
+  } else {
+    res.json({ authenticated: false });
+  }
+};
