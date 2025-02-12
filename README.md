@@ -15,4 +15,5 @@ PORT=3000
 BASE_URL=http://localhost:3000
 BASE_URL_FRONTEND=http://localhost:5173
 JWT_SECRET=your_secret
+NODE_ENV=development
 ```
