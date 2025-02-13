@@ -57,7 +57,7 @@ export const createUser = asyncHandler(async (req, res, next) => {
     const message = {
       email: newUser.email,
       subject: "Email Verification",
-      message: `Click on the link to verify your email: ${BASE_URL_FRONTEND}/users/verify/${newUser.verificationToken}`,
+      message: `Click on the link to verify your email: ${BASE_URL_FRONTEND}/verify/${newUser.verificationToken}`,
     };
     console.log(message);
 
