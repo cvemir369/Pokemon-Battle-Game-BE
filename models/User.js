@@ -13,7 +13,7 @@ const userSchema = new Schema({
     unique: [true, "Email is already taken"],
   },
   password: { type: String, required: [true, "Password is required"] },
-  image: { type: String, default: "" }, // Profile picture
+  image: { type: String, default: "pokeball.png" }, // Profile picture
   score: { type: Number, default: 0 },
   wins: { type: Number, default: 0 },
   losses: { type: Number, default: 0 },
