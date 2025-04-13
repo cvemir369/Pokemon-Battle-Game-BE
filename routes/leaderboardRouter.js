@@ -1,11 +1,8 @@
 import { Router } from "express";
-import {
-  getAllScores,
-  createScore,
-} from "../controllers/leaderboardController.js";
+import { getLeaderboard } from "../controllers/leaderboardController.js";
 
 const leaderboardRouter = Router();
 
-leaderboardRouter.route("/").get(getAllScores).post(createScore);
+leaderboardRouter.route("/").get(getLeaderboard);
 
 export default leaderboardRouter;

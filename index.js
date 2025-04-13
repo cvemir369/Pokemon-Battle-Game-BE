@@ -1,17 +1,28 @@
-import express from "express";
+import express, { json } from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import "./db/index.js";
-import { PORT } from "./config/config.js";
-import leaderboardRouter from "./routes/leaderboardRouter.js";
+import { PORT, BASE_URL_FRONTEND } from "./config/config.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import leaderboardRouter from "./routes/leaderboardRouter.js";
+import userRouter from "./routes/userRouter.js";
 
 const app = express();
-const port = PORT || 3000;
 
-app.use(cors({ origin: "*" }));
-app.use(express.json());
+app.use(
+  json(),
+  cors({ origin: BASE_URL_FRONTEND, credentials: true }),
+  cookieParser()
+);
+
+app.get("/", (req, res) => {
+  res.json({ message: "Server is running!" });
+});
+
 app.use("/leaderboard", leaderboardRouter);
-app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
+app.use("/users", userRouter);
+
+app.use("*", (req, res) => res.status(404).json({ message: "Page not found" }));
 app.use(errorHandler);
 
-app.listen(port, () => console.log(`Server listening on port : ${port}`));
+app.listen(PORT, () => console.log(`Server listening on port : ${PORT}`));
