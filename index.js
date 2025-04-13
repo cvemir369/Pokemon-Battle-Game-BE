@@ -10,9 +10,9 @@ import userRouter from "./routes/userRouter.js";
 const app = express();
 
 app.use(
-  json(),
   cors({ origin: BASE_URL_FRONTEND, credentials: true }),
-  cookieParser()
+  cookieParser(),
+  json()
 );
 
 app.get("/", (req, res) => {
