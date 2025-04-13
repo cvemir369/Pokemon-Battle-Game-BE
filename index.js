@@ -10,7 +10,12 @@ import userRouter from "./routes/userRouter.js";
 const app = express();
 
 app.use(
-  cors({ origin: BASE_URL_FRONTEND, credentials: true }),
+  cors({
+    origin: BASE_URL_FRONTEND,
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  }),
   cookieParser(),
   json()
 );
