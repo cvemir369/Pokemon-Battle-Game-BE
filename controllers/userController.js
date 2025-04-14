@@ -50,6 +50,8 @@ export const createUser = asyncHandler(async (req, res, next) => {
       email,
       password: hashedPassword,
       verificationToken,
+      isVerified: true, // Set to true for testing purposes
+      // isVerified: false, // Uncomment this line for production
     });
     await newUser.save();
 
