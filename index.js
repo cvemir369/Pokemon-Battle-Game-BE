@@ -9,7 +9,16 @@ import userRouter from "./routes/userRouter.js";
 
 const app = express();
 
-app.use(cors(), cookieParser(), json());
+app.use(
+  cors({
+    origin: BASE_URL_FRONTEND,
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  }),
+  cookieParser(),
+  json()
+);
 
 app.get("/", (req, res) => {
   res.json({ message: "Server is running!" });
