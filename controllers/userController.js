@@ -205,7 +205,7 @@ export const loginUser = asyncHandler(async (req, res, next) => {
   res.cookie("token", token, {
     httpOnly: true,
     secure: NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: "none",
   });
   res.status(200).json({
     message: "User logged in successfully",
@@ -219,7 +219,7 @@ export const logoutUser = asyncHandler(async (req, res, next) => {
   res.clearCookie("token", {
     httpOnly: true,
     secure: true,
-    sameSite: "Strict",
+    sameSite: "none",
   });
   res.status(200).json({ message: "User logged out successfully" });
 });
